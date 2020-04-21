@@ -29,30 +29,30 @@
 <section id="intro" class="clearfix">
     <div class="container">
         <div class="row justify-content-center">
-            <h2>FORM REGISTRASI</h2>
+            <h2>REGISTRATION FORM</h2>
             <form action="{{ Route('store_delivery_order') }}" method="post" role="form" class="contactForm col-md-9">
                 @csrf
                 <div class="form-group">
-                    <input type="text" name="no_member" class="form-control" id="no_member" placeholder="No. Member (optional)"/>
+                    <input type="text" name="no_member" class="form-control" id="no_member" placeholder="Member Code (optional)"/>
                     <div class="validation"></div>
                 </div>
                 <div class="form-group">
-                    <input type="text" class="form-control" name="name" id="name" placeholder="Nama" required data-msg="Mohon Isi Nama" />
+                    <input type="text" class="form-control" name="name" id="name" placeholder="Name" required data-msg="Please Fill in The Name" />
                     <div class="validation"></div>
                 </div>
                 <div class="form-group">
-                    <input type="text" class="form-control" name="phone" id="phone" placeholder="No. Telepon" required data-msg="Mohon Isi Nomor Telepon" />
+                    <input type="text" class="form-control" name="phone" id="phone" placeholder="Phone Number" required data-msg="Please Fill in The Phone Number" />
                     <div class="validation"></div>
                 </div>
                 <div class="form-group">
-                    <textarea class="form-control" name="address" rows="5" required data-msg="Mohon Isi Alamat" placeholder="Alamat"></textarea>
+                    <textarea class="form-control" name="address" rows="5" required data-msg="Please Fill in The Address" placeholder="Address"></textarea>
                     <div class="validation"></div>
                 </div>
 
                 @for($j=0;$j<2;$j++)
                     <div class="form-group" style="width: 82%; display: inline-block;">
-                        <select class="form-control" name="product_{{ $j }}" data-msg="Mohon Pilih Promo" {{ $j>0 ? "":"required"}}>
-                            <option selected disabled value="">Pilihan Promo{{ $j>0 ? " (optional)":""}}</option>
+                        <select class="form-control" name="product_{{ $j }}" data-msg="Please Choose The Promo" {{ $j>0 ? "":"required"}}>
+                            <option selected disabled value="">Choose Promo{{ $j>0 ? " (optional)":""}}</option>
 
                             @foreach($promos as $key=>$promo)
                                 <option value="{{ $key }}">{{ $promo['code'] }} - {{ $promo['name'] }} ( {{ $promo['harga'] }} )</option>
@@ -61,7 +61,7 @@
                         <div class="validation"></div>
                     </div>
                     <div class="form-group" style="width: 16%; display: inline-block; float: right;">
-                        <select class="form-control" name="qty_{{ $j }}" data-msg="Mohon Pilih Jumlah" {{ $j>0 ? "":"required"}}>
+                        <select class="form-control" name="qty_{{ $j }}" data-msg="Please Choose The Quantity" {{ $j>0 ? "":"required"}}>
                             <option selected value="1">1</option>
 
                             @for($i=2; $i<=10;$i++)
@@ -73,8 +73,8 @@
                 @endfor
 
                 <div class="form-group">
-                    <select class="form-control" id="branch" name="branch_id" data-msg="Mohon Pilih Cabang" required>
-                        <option selected disabled value="">Pilihan Cabang</option>
+                    <select class="form-control" id="branch" name="branch_id" data-msg="Please Choose The Branch" required>
+                        <option selected disabled value="">Choose Branch</option>
 
                         @foreach($branches as $branch)
                             <option value="{{ $branch['id'] }}">{{ $branch['code'] }} - {{ $branch['name'] }}</option>
@@ -83,12 +83,12 @@
                     <div class="validation"></div>
                 </div>
                 <div class="form-group">
-                    <input type="text" class="form-control" name="cso_id" id="cso" placeholder="Kode CSO" required data-msg="Mohon Isi Kode CSO" style="text-transform:uppercase"/>
+                    <input type="text" class="form-control" name="cso_id" id="cso" placeholder="CSO Code" required data-msg="Please Fill in The CSO Code" style="text-transform:uppercase"/>
                     <div class="validation" id="validation_cso"></div>
                 </div>
 
                 <div id="errormessage"></div>
-                <div class="text-center"><button id="submit" type="submit" title="Send Message" disabled="">Simpan Form Registrasi</button></div>
+                <div class="text-center"><button id="submit" type="submit" title="Send Message" disabled="">Save Registration Form</button></div>
             </form>
         </div>
     </div>
@@ -101,14 +101,13 @@
             var txtCso = $(this).val();
             $.get( '{{route("fetchCso")}}', { txt: txtCso })
             .done(function( result ) {
-                console.log(result);
                 if (result == 'true'){
-                    $('#validation_cso').html('Kode CSO Benar');
+                    $('#validation_cso').html('CSO Code Accepted');
                     $('#validation_cso').css('color', 'green');
                     $('#submit').removeAttr('disabled');
                 }
                 else{
-                    $('#validation_cso').html('Kode CSO Salah');
+                    $('#validation_cso').html('CSO Code Denied');
                     $('#validation_cso').css('color', 'red');
                     $('#submit').attr('disabled',"");
                 }

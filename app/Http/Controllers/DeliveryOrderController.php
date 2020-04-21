@@ -55,4 +55,9 @@ class DeliveryOrderController extends Controller
     	}
     	return $result;
     }
+
+    public function listDeliveryOrder(Request $request){
+        $deliveryOrder = DeliveryOrder::where('code', $request['code'])->first();
+        return view('ordersuccess', compact('deliveryOrder'));
+    }
 }
